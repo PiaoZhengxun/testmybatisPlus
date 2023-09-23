@@ -9,9 +9,23 @@
     <select id="getEmpByEmpno" parameterType="int" resultType="Emp">
         select * from emp where empno=#{empno}
     </select>
-    <select id="findByCondition" resultType="Emp" parameterType="QueryCondition1">
+    <select id="findByCondition1" resultType="Emp" parameterType="QueryCondition1">
         select * from emp
         where deptno=#{deptno} or empno=#{empno}
+    </select>
+    <select id="findByCondition2" resultType="Emp" parameterType="QueryCondition2">
+        select *
+        from emp
+        where ename
+        like concat('%',#{ename},'%') and deptno=#{deptno}
+    </select>
+    <select id="findBySal" resultType="Emp" parameterType="int">
+        select * from emp
+        where sal &gt; #{sal}
+    </select>
+    <select id="findEmpByEnameAndEmpno" resultType="int" parameterType="QueryCondition3">
+        select count(*) from emp
+        where empno=#{empno} and ename=#{ename}
     </select>
 
 

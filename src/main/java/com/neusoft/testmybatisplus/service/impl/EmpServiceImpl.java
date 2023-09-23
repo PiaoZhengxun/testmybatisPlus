@@ -2,6 +2,8 @@ package com.neusoft.testmybatisplus.service.impl;
 
 import com.neusoft.testmybatisplus.dto.Message;
 import com.neusoft.testmybatisplus.dto.QueryCondition1;
+import com.neusoft.testmybatisplus.dto.QueryCondition2;
+import com.neusoft.testmybatisplus.dto.QueryCondition3;
 import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.mapper.EmpMapper;
 import com.neusoft.testmybatisplus.service.IEmpService;
@@ -67,12 +69,65 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
 
         Message message = new Message();
 
-        List<Emp> list =empMapper.findByCondition(queryCondition1);
+        List<Emp> list = empMapper.findByCondition1(queryCondition1);
 
         if (list != null) {
             message.setStatusCode(200);
             message.setMsg("ok");
             message.setObj(list);
+        } else {
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+        return message;
+    }
+
+    @Override
+    public Message findByCondition2(QueryCondition2 queryCondition2) {
+        Message message = new Message();
+
+        List<Emp> list = empMapper.findByCondition2(queryCondition2);
+
+        if (list.size() > 0) {
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        } else {
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+        return message;
+    }
+
+    @Override
+    public Message findBySal(int sal) {
+        Message message = new Message();
+
+        List<Emp> list = empMapper.findBySal(sal);
+
+        if (list.size() > 0) {
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        } else {
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+        return message;
+    }
+
+    @Override
+    public Message findEmpByEnameAndEmpno(QueryCondition3 queryCondition3) {
+        Message message = new Message();
+
+        int num = empMapper.findEmpByEnameAndEmpno(queryCondition3);
+
+        System.out.println("num : " + num);
+
+        if (num == 1) {
+            message.setStatusCode(200);
+            message.setMsg("ok");
+//            message.setObj(list);
         } else {
             message.setStatusCode(400);
             message.setMsg("error");

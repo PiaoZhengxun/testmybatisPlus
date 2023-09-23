@@ -3,6 +3,8 @@ package com.neusoft.testmybatisplus.controller;
 
 import com.neusoft.testmybatisplus.dto.Message;
 import com.neusoft.testmybatisplus.dto.QueryCondition1;
+import com.neusoft.testmybatisplus.dto.QueryCondition2;
+import com.neusoft.testmybatisplus.dto.QueryCondition3;
 import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.service.IEmpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,25 @@ public class EmpController {
         Message message = iEmpService.getEmplistByCondition1(queryCondition1);
         return message;
     }
+
+    @GetMapping("getEmplistByCondition2")
+    public Message getEmplistByCondition2(QueryCondition2 queryCondition2){
+        Message message = iEmpService.findByCondition2(queryCondition2);
+        return message;
+    }
+
+    @GetMapping("getEmplistBySal")
+    public Message getEmplistBySal(Integer sal){
+        Message message = iEmpService.findBySal(sal);
+        return message;
+    }
+
+    @GetMapping("getEmplistByEnameAndEmpno")
+    public Message getEmplistByEnameAndEmpno(QueryCondition3 queryCondition3){
+        Message message = iEmpService.findEmpByEnameAndEmpno(queryCondition3);
+        return message;
+    }
+
 
     @GetMapping("getEmpByEmpno")
     public Message getEmpByEmpno(int empno){
