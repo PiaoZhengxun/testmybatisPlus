@@ -1,5 +1,6 @@
 package com.neusoft.testmybatisplus.mapper;
 
+import com.neusoft.testmybatisplus.dto.DeptInfo;
 import com.neusoft.testmybatisplus.dto.QueryCondition4;
 import com.neusoft.testmybatisplus.entity.Userinfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -29,11 +30,20 @@ public interface UserinfoMapper extends BaseMapper<Userinfo> {
     //update userinfo by userid
     public int updateUserinfoByUserid(Userinfo userinfo);
     public int updateUserinfoByUserid2(Userinfo userinfo);
+    public int updateUserinfoByUserid3(Userinfo userinfo);
 
     public Userinfo getUserinfoByUserid(int userid);
 
     public int deleteUserinfoByUserid(int userid);
 
     public List<Userinfo> findUserinfoByCondition(QueryCondition4 queryCondition4);
+    public List<Userinfo> findUserinfoByCondition2(QueryCondition4 queryCondition4);
+
+    public List<Userinfo> findUserinfoByCondition4(QueryCondition4 queryCondition4);
+
+    public List<Userinfo> findUserinfoByUserids(int[] userids);
+
+    public List<DeptInfo> findAllDeptInfo();
+    public List<DeptInfo> findAllDeptInfo2();
 
 }

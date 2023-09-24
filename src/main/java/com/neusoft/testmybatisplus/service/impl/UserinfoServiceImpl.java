@@ -1,5 +1,6 @@
 package com.neusoft.testmybatisplus.service.impl;
 
+import com.neusoft.testmybatisplus.dto.DeptInfo;
 import com.neusoft.testmybatisplus.dto.Message;
 import com.neusoft.testmybatisplus.dto.QueryCondition4;
 import com.neusoft.testmybatisplus.entity.Userinfo;
@@ -185,6 +186,22 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     }
 
     @Override
+    public Message updateUserinfoByUserid3(Userinfo userinfo) {
+        Message message = new Message();
+
+        int num = userinfoMapper.updateUserinfoByUserid3(userinfo);
+        if(num > 0 ){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+        } else {
+            message.setStatusCode(500);
+            message.setMsg("error");
+        }
+
+        return message;
+    }
+
+    @Override
     public Message deleteUserinfoByUserid(int userid) {
         Message message = new Message();
         int num = userinfoMapper.deleteUserinfoByUserid(userid);
@@ -203,6 +220,84 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     public Message searchByMultiCondition4(QueryCondition4 queryCondition4) {
         Message message=new Message();
         List<Userinfo> list=userinfoMapper.findUserinfoByCondition(queryCondition4);
+        if(list.size()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+    }
+
+    @Override
+    public Message searchByMultiCondition42(QueryCondition4 queryCondition4) {
+        Message message=new Message();
+        List<Userinfo> list=userinfoMapper.findUserinfoByCondition2(queryCondition4);
+        if(list.size()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+    }
+
+    @Override
+    public Message searchByCondition4(QueryCondition4 queryCondition4) {
+        Message message=new Message();
+        List<Userinfo> list=userinfoMapper.findUserinfoByCondition4(queryCondition4);
+        if(list.size()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+    }
+
+    @Override
+    public Message findUserinfoByUserids(int[] userids) {
+        Message message=new Message();
+        List<Userinfo> list=userinfoMapper.findUserinfoByUserids(userids);
+        if(list.size()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+    }
+
+    @Override
+    public Message findAllDeptInfo() {
+        Message message=new Message();
+        List<DeptInfo> list=userinfoMapper.findAllDeptInfo();
+        if(list.size()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+    }@Override
+    public Message findAllDeptInfo2() {
+        Message message=new Message();
+        List<DeptInfo> list=userinfoMapper.findAllDeptInfo2();
         if(list.size()>0){
             message.setStatusCode(200);
             message.setMsg("ok");
