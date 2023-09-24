@@ -6,4 +6,68 @@
         insert into userinfo(username,nickname,password,age,hiredate,email,status)
         values(#{username},#{nickname},#{password},#{age},#{hiredate},#{email},#{status})
     </insert>
+    <insert id="insertUserInfo2" parameterType="Userinfo">
+        <selectKey keyProperty="userid" resultType="int" order="AFTER">
+            select LAST_INSERT_ID()
+        </selectKey>
+            insert into userinfo(username,nickname,password,age,hiredate,email,status)
+            values(#{username},#{nickname},#{password},#{age},#{hiredate},#{email},#{status})
+    </insert>
+
+    <insert id="insertUserInfo22" parameterType="Userinfo" useGeneratedKeys="true" keyProperty="userid">
+        insert into userinfo(username,nickname,password,age,hiredate,email,status)
+        values(#{username},#{nickname},#{password},#{age},#{hiredate},#{email},#{status})
+    </insert>
+    <delete id="deleteUserinfoByUserid" parameterType="int">
+        delete from userinfo where userid=#{userid}
+    </delete>
+
+    <select id="verifyUserinfo" resultType="Userinfo" parameterType="Userinfo">
+        select userid,nickname,status from userinfo
+        where username=#{username} and password=#{password}
+    </select>
+    <select id="getUserinfoByUserid" resultType="Userinfo" parameterType="int">
+        select * from userinfo where userid=#{userid}
+    </select>
+    <select id="findUserinfoByCondition" resultType="Userinfo" parameterType="QueryCondition4">
+        select * from userinfo
+        <where>
+            <if test="username!=null and username!=''">
+                or username like concat('%',#{username},'%')
+            </if>
+            <if test="userid!=null and userid!=''">
+                or userid = #{userid}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateUserinfoByUserid" parameterType="Userinfo">
+        update userinfo  set username=#{username},password=#{password},
+                             nickname=#{nickname},age=#{age},hiredate=#{hiredate},
+                             email=#{email} where userid=#{userid}
+    </update>
+    <update id="updateUserinfoByUserid2" parameterType="Userinfo">
+        update userinfo
+        <set>
+            <if test="username!=null and username!=''">
+                username=#{username},
+            </if>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+            <if test="nickname!=null and nickname!=''">
+                nickname=#{nickname},
+            </if>
+            <if test="hiredate!=null and hiredate!=''">
+                hiredate=#{hiredate},
+            </if>
+            <if test="age!=null and age!=''">
+                age=#{age},
+            </if>
+            <if test="email!=null and email!=''">
+                email=#{email},
+            </if>
+        </set>
+        where userid=#{userid}
+    </update>
 </mapper>
