@@ -39,5 +39,6 @@ public interface IUserinfoService extends IService<Userinfo> {
 
     public Message findAllDeptInfo();
     public Message findAllDeptInfo2();
+    public Message findAllDeptInfo3();
 
 }

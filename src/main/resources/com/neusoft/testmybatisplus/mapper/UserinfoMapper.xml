@@ -95,6 +95,21 @@
         group by emp.deptno
     </select>
 
+    <resultMap type="DeptInfo2" id="deptInfo2Map">
+        <result property="empcountnum" column="empcountnum"/>
+        <association property="dept" javaType="Dept">
+            <id property="deptno" column="deptno"/>
+            <result property="dname" column="dname"/>
+            <result property="loc" column="loc"/>
+        </association>
+    </resultMap>
+
+    <select id="findAllDeptInfo3"  resultMap="deptInfo2Map">
+        select dept.* ,  count(*) empcountnum
+        from emp join dept on(emp.deptno=dept.deptno)
+        group by emp.deptno
+    </select>
+
     <update id="updateUserinfoByUserid" parameterType="Userinfo">
         update userinfo  set username=#{username},password=#{password},
                              nickname=#{nickname},age=#{age},hiredate=#{hiredate},

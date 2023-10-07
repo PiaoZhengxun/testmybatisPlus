@@ -97,9 +97,16 @@ public class UserinfoController {
         Message message = iUserinfoService.findAllDeptInfo();
         return message;
 
-    }@GetMapping("findAllDeptInfo2")
+    }
+
+    @GetMapping("findAllDeptInfo2")
     public Message findAllDeptInfo2() {
         Message message = iUserinfoService.findAllDeptInfo2();
+        return message;
+    }
+    @GetMapping("findAllDeptInfo3")
+    public Message findAllDeptInfo3() {
+        Message message = iUserinfoService.findAllDeptInfo3();
         return message;
     }
 

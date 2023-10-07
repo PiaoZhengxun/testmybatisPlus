@@ -1,6 +1,7 @@
 package com.neusoft.testmybatisplus.service.impl;
 
 import com.neusoft.testmybatisplus.dto.DeptInfo;
+import com.neusoft.testmybatisplus.dto.DeptInfo2;
 import com.neusoft.testmybatisplus.dto.Message;
 import com.neusoft.testmybatisplus.dto.QueryCondition4;
 import com.neusoft.testmybatisplus.entity.Userinfo;
@@ -298,6 +299,22 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     public Message findAllDeptInfo2() {
         Message message=new Message();
         List<DeptInfo> list=userinfoMapper.findAllDeptInfo2();
+        if(list.size()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+    }
+
+    @Override
+    public Message findAllDeptInfo3() {
+        Message message=new Message();
+        List<DeptInfo2> list=userinfoMapper.findAllDeptInfo3();
         if(list.size()>0){
             message.setStatusCode(200);
             message.setMsg("ok");

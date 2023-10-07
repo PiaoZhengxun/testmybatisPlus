@@ -1,6 +1,7 @@
 package com.neusoft.testmybatisplus.mapper;
 
 import com.neusoft.testmybatisplus.dto.DeptInfo;
+import com.neusoft.testmybatisplus.dto.DeptInfo2;
 import com.neusoft.testmybatisplus.dto.QueryCondition4;
 import com.neusoft.testmybatisplus.entity.Userinfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -45,5 +46,7 @@ public interface UserinfoMapper extends BaseMapper<Userinfo> {
 
     public List<DeptInfo> findAllDeptInfo();
     public List<DeptInfo> findAllDeptInfo2();
+    public List<DeptInfo2> findAllDeptInfo3();
+
 
 }
