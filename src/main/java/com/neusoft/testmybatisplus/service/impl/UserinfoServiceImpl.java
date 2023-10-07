@@ -4,6 +4,7 @@ import com.neusoft.testmybatisplus.dto.DeptInfo;
 import com.neusoft.testmybatisplus.dto.DeptInfo2;
 import com.neusoft.testmybatisplus.dto.Message;
 import com.neusoft.testmybatisplus.dto.QueryCondition4;
+import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.entity.Userinfo;
 import com.neusoft.testmybatisplus.mapper.UserinfoMapper;
 import com.neusoft.testmybatisplus.service.IUserinfoService;
@@ -319,6 +320,22 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             message.setStatusCode(200);
             message.setMsg("ok");
             message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+    }
+
+    @Override
+    public Message findEmpDeptByEmpno(int empno) {
+        Message message=new Message();
+        Emp emp= userinfoMapper.findEmpDeptByEmpno(empno);
+        if(emp != null){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(emp);
         }else{
             message.setStatusCode(400);
             message.setMsg("error");

@@ -110,6 +110,28 @@
         group by emp.deptno
     </select>
 
+    <resultMap id="empdeptMap" type="Emp">
+        <id property="empno" column="empno"/>
+        <result property="ename" column="ename"/>
+        <result property="job" column="job"/>
+        <result property="mgr" column="mgr"/>
+        <result property="hiredate" column="hiredate"/>
+        <result property="sal" column="sal"/>
+        <result property="comm" column="comm"/>
+        <result property="deptno" column="deptno"/>
+        <association property="dept" javaType="Dept">
+            <id property="deptno" column="deptno"/>
+            <result property="dname" column="dname"/>
+            <result property="loc" column="loc"/>
+        </association>
+    </resultMap>
+
+    <select id="findEmpDeptByEmpno" parameterType="int" resultMap="empdeptMap">
+        select emp.* ,  dept.*
+        from emp join dept on(emp.deptno=dept.deptno)
+        where empno=#{empno}
+    </select>
+
     <update id="updateUserinfoByUserid" parameterType="Userinfo">
         update userinfo  set username=#{username},password=#{password},
                              nickname=#{nickname},age=#{age},hiredate=#{hiredate},

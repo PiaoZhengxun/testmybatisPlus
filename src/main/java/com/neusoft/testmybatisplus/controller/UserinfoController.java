@@ -109,6 +109,11 @@ public class UserinfoController {
         Message message = iUserinfoService.findAllDeptInfo3();
         return message;
     }
+    @GetMapping("findEmpDeptByEmpno")
+    public Message findEmpDeptByEmpno(int empno) {
+        Message message = iUserinfoService.findEmpDeptByEmpno(empno);
+        return message;
+    }
 
 }
 

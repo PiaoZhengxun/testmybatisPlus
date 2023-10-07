@@ -3,6 +3,7 @@ package com.neusoft.testmybatisplus.mapper;
 import com.neusoft.testmybatisplus.dto.DeptInfo;
 import com.neusoft.testmybatisplus.dto.DeptInfo2;
 import com.neusoft.testmybatisplus.dto.QueryCondition4;
+import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.entity.Userinfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -47,6 +48,8 @@ public interface UserinfoMapper extends BaseMapper<Userinfo> {
     public List<DeptInfo> findAllDeptInfo();
     public List<DeptInfo> findAllDeptInfo2();
     public List<DeptInfo2> findAllDeptInfo3();
+
+    public Emp findEmpDeptByEmpno(int empno);
 
 
 }
