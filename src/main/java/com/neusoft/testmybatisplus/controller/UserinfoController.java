@@ -45,6 +45,13 @@ public class UserinfoController {
         return message;
     }
 
+    @PostMapping("login2")
+    public Message login2(@RequestBody  Userinfo userinfo){
+        Message message=iUserinfoService.verifyUserinfoBySelectMap(userinfo);
+        return message;
+    }
+
+
     @PostMapping("updateUserinfoByUserid")
     public Message updateUserinfoByUserid(@RequestBody Userinfo userinfo){
         Message message = iUserinfoService.updateUserinfoByUserid(userinfo);

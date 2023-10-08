@@ -83,4 +83,23 @@ public interface EmpMapper extends BaseMapper<Emp> {
     })
     public Emp findEmpDeptByEmpno(int empno);
 
+    @Select("select * from emp ")
+    @Results(id = "empDeptMap2" , value={
+            @Result(property = "empno",column = "empno"),
+            @Result(property = "ename",column = "ename"),
+            @Result(property = "job",column = "job"),
+            @Result(property = "sal",column = "sal"),
+            @Result(property = "hiredate",column = "hiredate"),
+            @Result(property = "comm",column = "comm"),
+            @Result(property = "mgr",column = "mgr"),
+            @Result(property = "deptno",column = "deptno"),
+            @Result(property = "dept" ,
+                    column = "deptno",
+                    one=@One(select="com.neusoft.testmybatisplus.mapper.DeptMapper.findDeptByDeptno"))
+    })
+    public List<Emp> findEmpDept();
+
+    @Select("select * from emp where deptno=#{deptno}")
+    public List<Emp> findEmpByDeptno(int deptno);
+
 }

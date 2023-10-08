@@ -45,4 +45,6 @@ public interface IEmpService extends IService<Emp> {
 
     public Message  getEmpDeptByEmpno(int empno);
 
+    public Message  getEmpDept();
+
 }

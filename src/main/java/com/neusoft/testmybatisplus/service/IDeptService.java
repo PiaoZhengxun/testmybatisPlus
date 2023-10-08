@@ -16,4 +16,8 @@ public interface IDeptService extends IService<Dept> {
 
     public Message findDeptEmpByDeptno(int deptno);
 
+    public Message findDeptEmpByDeptno2(int deptno);
+
+    public Message findDeptEmp();
+
 }

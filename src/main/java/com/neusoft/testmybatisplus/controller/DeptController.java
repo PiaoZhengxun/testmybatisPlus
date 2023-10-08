@@ -30,5 +30,17 @@ public class DeptController {
         return message;
     }
 
+    @GetMapping("findDeptEmpByDeptno2")
+    public Message findDeptEmpByDeptno2(int deptno){
+        Message message= iDeptService.findDeptEmpByDeptno2(deptno);
+        return message;
+    }
+
+    @GetMapping("findDeptEmp")
+    public Message findDeptEmp(){
+        Message message= iDeptService.findDeptEmp();
+        return message;
+    }
+
 }
 

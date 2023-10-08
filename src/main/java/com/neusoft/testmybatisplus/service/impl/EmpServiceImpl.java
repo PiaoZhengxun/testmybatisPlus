@@ -275,4 +275,23 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
         return message;
 
     }
+
+    @Override
+    public Message getEmpDept() {
+        Message message = new Message();
+        List<Emp> list=empMapper.findEmpDept();
+
+
+        if(list.size()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+
+    }
 }

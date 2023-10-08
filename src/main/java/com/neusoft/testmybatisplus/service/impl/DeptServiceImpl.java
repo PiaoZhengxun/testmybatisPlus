@@ -9,6 +9,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务实现类
@@ -36,6 +38,40 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
             message.setStatusCode(400);
             message.setMsg("error");
         }
+
+        return message;
+    }
+
+    @Override
+    public Message findDeptEmpByDeptno2(int deptno) {
+        Message message=new Message();
+        Dept dept=deptMapper.findDeptEmpByDeptno2(deptno);
+        if(dept!=null){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(dept);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+
+        return message;
+    }
+
+    @Override
+    public Message findDeptEmp() {
+        Message message=new Message();
+        List<Dept> list=deptMapper.findDeptEmp();
+        if(list.size()>1){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
 
         return message;
     }

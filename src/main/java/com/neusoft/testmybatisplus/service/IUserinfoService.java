@@ -23,6 +23,7 @@ public interface IUserinfoService extends IService<Userinfo> {
     public Message insertUserinfo2(Userinfo userinfo);
 
     public Message verifyUserinfo(Userinfo userinfo);
+    public Message verifyUserinfoBySelectMap(Userinfo userinfo);
 
 //    public Userinfo getUserinfoByUserid(int userid);
     public Message updateUserinfoByUserid(Userinfo userinfo);

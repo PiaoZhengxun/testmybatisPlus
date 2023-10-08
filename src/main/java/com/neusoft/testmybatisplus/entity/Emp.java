@@ -42,6 +42,7 @@ public class Emp implements Serializable {
     @TableField("DEPTNO")
     private Integer deptno;
 
+    @TableField(exist = false)
     private Dept dept;
 
     public Dept getDept() {

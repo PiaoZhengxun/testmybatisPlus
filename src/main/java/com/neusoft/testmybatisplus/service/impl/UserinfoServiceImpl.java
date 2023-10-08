@@ -1,9 +1,6 @@
 package com.neusoft.testmybatisplus.service.impl;
 
-import com.neusoft.testmybatisplus.dto.DeptInfo;
-import com.neusoft.testmybatisplus.dto.DeptInfo2;
-import com.neusoft.testmybatisplus.dto.Message;
-import com.neusoft.testmybatisplus.dto.QueryCondition4;
+import com.neusoft.testmybatisplus.dto.*;
 import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.entity.Userinfo;
 import com.neusoft.testmybatisplus.mapper.UserinfoMapper;
@@ -17,7 +14,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -117,6 +116,43 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
         }
         return message;
 
+    }
+
+    @Override
+    public Message verifyUserinfoBySelectMap(Userinfo userinfo) {
+
+        Message message=new Message();
+
+        LoginUserinfoBean loginUserinfoBean=new LoginUserinfoBean();
+        loginUserinfoBean.setUsername(userinfo.getUsername());
+        loginUserinfoBean.setPassword(userinfo.getPassword());
+
+        Map loginUserinfoMap=new HashMap();
+        loginUserinfoMap.put("username",loginUserinfoBean.getUsername());
+        loginUserinfoMap.put("password",loginUserinfoBean.getPassword());
+
+        //username=#{username}   map.key=#{map.value}
+        List<Userinfo> list=userinfoMapper.selectByMap(loginUserinfoMap);
+
+        if(list.size()<1){
+            message.setStatusCode(400);
+            message.setMsg("Error username or password");
+        }else if(list.size()==1){
+            Userinfo u1=list.get(0);
+            if(u1.getStatus()==1){
+                message.setStatusCode(200);
+                message.setMsg("ok");
+                message.setObj(u1);
+            }else if(u1.getStatus()==0){
+                message.setStatusCode(501);
+                message.setMsg("Contact to system admin");
+                message.setObj(u1);
+            }
+        }else{
+            message.setStatusCode(500);
+            message.setMsg("system error");
+        }
+        return message;
     }
 
     private Userinfo getUserinfoByUserid(int userid){

@@ -132,5 +132,12 @@ public class EmpController {
         return message;
     }
 
+    @GetMapping("getEmpDept")
+    public Message getEmpDept(){
+        Message message=iEmpService.getEmpDept();
+
+        return message;
+    }
+
 }
 
