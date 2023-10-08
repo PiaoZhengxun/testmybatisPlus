@@ -52,4 +52,6 @@ public interface UserinfoMapper extends BaseMapper<Userinfo> {
     public Emp findEmpDeptByEmpno(int empno);
 
 
+
+
 }

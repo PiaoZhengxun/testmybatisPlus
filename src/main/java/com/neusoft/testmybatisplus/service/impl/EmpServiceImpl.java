@@ -134,4 +134,145 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
         }
         return message;
     }
+
+    @Override
+    public Message getAllEmps3() {
+        Message message = new Message();
+
+        List<Emp> list = empMapper.findAll2();
+
+        if (list.size() > 0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        } else {
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+    }
+
+    @Override
+    public Message getEmpByEmpno3(int empno) {
+        Message message = new Message();
+
+        Emp emp = empMapper.getEmpByEmpno3(empno);
+
+        if (emp != null) {
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(emp);
+        } else {
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+        return message;
+    }
+
+    @Override
+    public Message getEmplistByCondition3(QueryCondition1 queryConditon1) {
+        Message message=new Message();
+        List<Emp> list=empMapper.findByCondtion3(queryConditon1);
+
+        if(list.size()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+        return message;
+    }
+
+    @Override
+    public Message findEmpByEnameAndEmpno3(QueryCondition3 queryCondition3) {
+        Message message=new Message();
+
+
+        int num=empMapper.findEmpByEnameAndEmpno3(queryCondition3);
+        System.out.println("num:"+num);
+
+        if(num==1){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+        }else{
+            message.setStatusCode(500);
+            message.setMsg("error");
+
+        }
+        return message;
+    }
+
+    @Override
+    public Message insertEmp(Emp emp) {
+        Message message=new Message();
+
+        int num = empMapper.insertToEmp(emp);
+
+        if(num==1){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+        }else{
+            message.setStatusCode(500);
+            message.setMsg("error");
+
+        }
+        return message;
+    }
+
+    @Override
+    public Message updateEmp(Emp emp) {
+        Message message=new Message();
+
+        int num = empMapper.updateToEmp(emp);
+
+        if(num==1){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+        }else{
+            message.setStatusCode(500);
+            message.setMsg("error");
+
+        }
+        return message;
+    }
+
+    @Override
+    public Message deleteEmp(int empno) {
+        Message message = new Message();
+
+        int num = empMapper.deleteToEmp(empno);
+
+        if (num == 1) {
+            message.setStatusCode(200);
+            message.setMsg("ok");
+        } else {
+            message.setStatusCode(500);
+            message.setMsg("error");
+
+        }
+        return message;
+
+    }
+
+    @Override
+    public Message getEmpDeptByEmpno(int empno) {
+        Message message = new Message();
+        Emp emp=empMapper.findEmpDeptByEmpno(empno);
+
+
+        if(emp!=null){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(emp);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+
+    }
 }

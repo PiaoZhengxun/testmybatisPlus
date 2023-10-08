@@ -31,4 +31,18 @@ public interface IEmpService extends IService<Emp> {
 
     public Message findEmpByEnameAndEmpno(QueryCondition3 queryCondition3);
 
+    public Message getAllEmps3();
+
+    public Message getEmpByEmpno3(int empno);
+
+    public Message getEmplistByCondition3(QueryCondition1 queryConditon1);
+
+    public Message  findEmpByEnameAndEmpno3(QueryCondition3 queryCondition3);
+
+    public Message  insertEmp(Emp emp);
+    public Message  updateEmp(Emp emp);
+    public Message  deleteEmp(int empno);
+
+    public Message  getEmpDeptByEmpno(int empno);
+
 }

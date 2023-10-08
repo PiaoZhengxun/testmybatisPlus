@@ -3,6 +3,7 @@ package com.neusoft.testmybatisplus.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -25,6 +26,25 @@ public class Dept implements Serializable {
     @TableField("LOC")
     private String loc;
 
+    private List<Emp> emps;
+
+    @Override
+    public String toString() {
+        return "Dept{" +
+                "deptno=" + deptno +
+                ", dname='" + dname + '\'' +
+                ", loc='" + loc + '\'' +
+                ", emps=" + emps +
+                '}';
+    }
+
+    public List<Emp> getEmps() {
+        return emps;
+    }
+
+    public void setEmps(List<Emp> emps) {
+        this.emps = emps;
+    }
 
     public Integer getDeptno() {
         return deptno;
@@ -50,12 +70,4 @@ public class Dept implements Serializable {
         this.loc = loc;
     }
 
-    @Override
-    public String toString() {
-        return "Dept{" +
-        "deptno=" + deptno +
-        ", dname=" + dname +
-        ", loc=" + loc +
-        "}";
-    }
 }

@@ -9,10 +9,7 @@ import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.service.IEmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.MessageSourceAccessor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.interfaces.PBEKey;
 import java.util.List;
@@ -84,6 +81,54 @@ public class EmpController {
             message.setStatusCode(400);
             message.setMsg("error");
         }
+        return message;
+    }
+
+    @GetMapping("getAllEmps3")
+    public Message getAllEmps3(){
+        Message message = iEmpService.getAllEmps3();
+        return message;
+    }
+
+    @GetMapping("getEmpByEmpno3")
+    public Message getEmpByEmpno3(int empno3){
+        Message message=iEmpService.getEmpByEmpno3(empno3);
+        return message;
+    }
+
+    @GetMapping("getEmplistByCondition3")
+    public Message getEmplistByCondition3(QueryCondition1 queryConditon1){
+        Message message=iEmpService.getEmplistByCondition3(queryConditon1);
+        return message;
+    }
+
+    @GetMapping("getEmpNumByEnameAndEmpno3")
+    public Message getEmpNumByEnameAndEmpno3(QueryCondition3 queryCondition3){
+        Message message=iEmpService.findEmpByEnameAndEmpno3(queryCondition3);
+        return message;
+    }
+
+    @PostMapping("insertEmp")
+    public Message insertEmp(@RequestBody Emp emp){
+        Message message=iEmpService.insertEmp(emp);
+        return message;
+    }
+    @PostMapping("updateEmp")
+    public Message updateEmp(@RequestBody  Emp emp){
+        Message message=iEmpService.updateEmp(emp);
+        return message;
+    }
+
+    @GetMapping("deleteEmp")
+    public Message deleteEmp(int empno){
+        Message message=iEmpService.deleteEmp(empno);
+        return message;
+    }
+
+    @GetMapping("getEmpDeptByEmpno")
+    public Message getEmpDeptByEmpno(int empno){
+        Message message=iEmpService.getEmpDeptByEmpno(empno);
+
         return message;
     }
 
