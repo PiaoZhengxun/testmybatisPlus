@@ -1,5 +1,6 @@
 package com.neusoft.testmybatisplus.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.neusoft.testmybatisplus.dto.*;
 import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.entity.Userinfo;
@@ -13,10 +14,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * <p>
@@ -36,21 +34,19 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     public Message insertUserinfo(Userinfo userinfo) {
 
         userinfo.setStatus(1);
-
         Date date = new Date();
         Instant instant = date.toInstant();
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         LocalDate localDate = localDateTime.toLocalDate();
         userinfo.setHiredate(localDate);
 
-        Message message = new Message();
+        Message message=new Message();
+        int num=userinfoMapper.insertUserinfo(userinfo);
 
-        int num = userinfoMapper.insertUserInfo(userinfo);
-
-        if(num > 0 ){
+        if(num>0){
             message.setStatusCode(200);
             message.setMsg("ok");
-        } else {
+        }else{
             message.setStatusCode(500);
             message.setMsg("error");
         }
@@ -62,66 +58,70 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     public Message insertUserinfo2(Userinfo userinfo) {
         userinfo.setStatus(1);
 
+
         Date date = new Date();
         Instant instant = date.toInstant();
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         LocalDate localDate = localDateTime.toLocalDate();
         userinfo.setHiredate(localDate);
 
-        Message message = new Message();
-        System.out.println("before" + userinfo);
-        int num = userinfoMapper.insertUserInfo22(userinfo);
-        System.out.println("after" + userinfo);
 
+
+        Message message=new Message();
+        System.out.println("before "+userinfo);
+        int num=userinfoMapper.insertUserinfo22(userinfo);
+        System.out.println("after "+userinfo);
         userinfo.setPassword(null);
         userinfo.setHiredate(null);
         userinfo.setAge(0);
 
-        if(num > 0 ){
+        if(num>0){
             message.setStatusCode(200);
             message.setMsg("ok");
+
             message.setObj(userinfo);
-        } else {
+        }else{
             message.setStatusCode(500);
             message.setMsg("error");
         }
-
         return message;
     }
 
     @Override
     public Message verifyUserinfo(Userinfo userinfo) {
+        Message message=new Message();
+        List<Userinfo> list=userinfoMapper.verifyUserinfo(userinfo);
 
-        Message message = new Message();
-
-        List<Userinfo> list = userinfoMapper.verifyUserinfo(userinfo);
-
-        if(list.size() < 1){
+        if(list.size()<1){
             message.setStatusCode(400);
             message.setMsg("Error username or password");
-        } else if (list.size() == 1){
-            Userinfo u1 = list.get(0);
-            if (u1.getStatus() == 1){
+        }else if(list.size()==1){
+            Userinfo u1=list.get(0);
+            if(u1.getStatus()==1){
                 message.setStatusCode(200);
                 message.setMsg("ok");
                 message.setObj(u1);
-            } else if (u1.getStatus() == 0){
+            }else if(u1.getStatus()==0){
                 message.setStatusCode(501);
-                message.setMsg("contact to system admin");
+                message.setMsg("Contact to system admin");
                 message.setObj(u1);
             }
-        } else {
+        }else{
             message.setStatusCode(500);
             message.setMsg("system error");
         }
+
+
         return message;
+
 
     }
 
     @Override
     public Message verifyUserinfoBySelectMap(Userinfo userinfo) {
-
         Message message=new Message();
+
+//        LoginUserinfoBean loginUserinfoBean=inputUsernamePassword();
 
         LoginUserinfoBean loginUserinfoBean=new LoginUserinfoBean();
         loginUserinfoBean.setUsername(userinfo.getUsername());
@@ -152,14 +152,16 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             message.setStatusCode(500);
             message.setMsg("system error");
         }
+
+//        System.out.println(message);
         return message;
     }
 
     private Userinfo getUserinfoByUserid(int userid){
-        return userinfoMapper.getUserinfoByUserid(userid);
+        return  userinfoMapper.getUserinfoByUserid(userid);
     }
 
-    private Userinfo CheckUserinfoProperties(Userinfo userinfoParam, Userinfo userinfoDB){
+    private Userinfo CheckUserinfoProperties(Userinfo userinfoParam,Userinfo userinfoDB){
         if(userinfoParam.getUsername()==null){
             userinfoParam.setUsername(userinfoDB.getUsername());
         }
@@ -184,69 +186,68 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
         return userinfoParam;
     }
 
+
     @Override
     public Message updateUserinfoByUserid(Userinfo userinfo) {
-        Message message = new Message();
+        Message message=new Message();
 
-        Userinfo userinfo1 = getUserinfoByUserid(userinfo.getUserid());
-        userinfo = CheckUserinfoProperties(userinfo, userinfo1);
+        Userinfo userinfo1=getUserinfoByUserid(userinfo.getUserid());
+        userinfo=CheckUserinfoProperties(userinfo,userinfo1);
 
-        int num = userinfoMapper.updateUserinfoByUserid(userinfo);
-        if(num > 0 ){
+
+        int num=userinfoMapper.updateUserinfoByUserid(userinfo);
+        if(num>0){
             message.setStatusCode(200);
             message.setMsg("ok");
-        } else {
+        }else{
             message.setStatusCode(500);
             message.setMsg("error");
         }
 
         return message;
+
     }
 
     @Override
     public Message updateUserinfoByUserid2(Userinfo userinfo) {
-        Message message = new Message();
-
-//        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        Message message=new Message();
 //        System.out.println("ByUserid2");
-//        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-        int num = userinfoMapper.updateUserinfoByUserid2(userinfo);
-        if(num > 0 ){
+        int num=userinfoMapper.updateUserinfoByUserid2(userinfo);
+        if(num>0){
             message.setStatusCode(200);
             message.setMsg("ok");
-        } else {
+        }else{
             message.setStatusCode(500);
             message.setMsg("error");
         }
-
         return message;
+
     }
 
     @Override
     public Message updateUserinfoByUserid3(Userinfo userinfo) {
-        Message message = new Message();
-
-        int num = userinfoMapper.updateUserinfoByUserid3(userinfo);
-        if(num > 0 ){
+        Message message=new Message();
+//        System.out.println("ByUserid2");
+        int num=userinfoMapper.updateUserinfoByUserid3(userinfo);
+        if(num>0){
             message.setStatusCode(200);
             message.setMsg("ok");
-        } else {
+        }else{
             message.setStatusCode(500);
             message.setMsg("error");
         }
-
         return message;
     }
 
     @Override
     public Message deleteUserinfoByUserid(int userid) {
-        Message message = new Message();
-        int num = userinfoMapper.deleteUserinfoByUserid(userid);
-        if(num > 0 ){
+        Message message=new Message();
+        int num=userinfoMapper.deleteUserinfoByUserid(userid);
+
+        if(num>0){
             message.setStatusCode(200);
             message.setMsg("ok");
-        } else {
+        }else{
             message.setStatusCode(500);
             message.setMsg("error");
         }
@@ -332,7 +333,9 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
         }
 
         return message;
-    }@Override
+    }
+
+    @Override
     public Message findAllDeptInfo2() {
         Message message=new Message();
         List<DeptInfo> list=userinfoMapper.findAllDeptInfo2();
@@ -350,6 +353,7 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
 
     @Override
     public Message findAllDeptInfo3() {
+
         Message message=new Message();
         List<DeptInfo2> list=userinfoMapper.findAllDeptInfo3();
         if(list.size()>0){
@@ -362,13 +366,15 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
         }
 
         return message;
+
+
     }
 
     @Override
     public Message findEmpDeptByEmpno(int empno) {
         Message message=new Message();
-        Emp emp= userinfoMapper.findEmpDeptByEmpno(empno);
-        if(emp != null){
+        Emp emp=userinfoMapper.findEmpDeptByEmpno(empno);
+        if(emp!=null){
             message.setStatusCode(200);
             message.setMsg("ok");
             message.setObj(emp);
@@ -377,6 +383,194 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             message.setMsg("error");
         }
 
+        return message;
+    }
+
+    @Override
+    public Message insertUserinfo3(Userinfo userinfo) {
+//        Userinfo userinfo= inputUserinfo();
+        userinfo.setStatus(1);
+        Date date = new Date();
+        Instant instant = date.toInstant();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        LocalDate localDate = localDateTime.toLocalDate();
+        userinfo.setHiredate(localDate);
+        Message message=new Message();
+//        int num=userinfoMapper.insertUserinfo(userinfo);
+        int num=userinfoMapper.insert(userinfo);
+        if(num>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(userinfo);
+        }else{
+            message.setStatusCode(500);
+            message.setMsg("error");
+        }
+
+        return message;
+    }
+
+    @Override
+    public Message insertUserinfo4(UserinfoDate userinfoDate) {
+
+        userinfoDate.setStatus(1);
+        Date date = new Date();
+//        Instant instant = date.toInstant();
+//        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+//        LocalDate localDate = localDateTime.toLocalDate();
+        userinfoDate.setHiredateByJavaUtilDate(date);
+
+
+
+        Message message=new Message();
+        System.out.println("before "+userinfoDate);
+        int num=userinfoMapper.insertUserinfo23(userinfoDate);
+        System.out.println("after "+userinfoDate);
+//        userinfoDate.setPassword(null);
+//        userinfoDate.setHiredate(null);
+//        userinfoDate.setAge(0);
+
+        if(num>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+
+            message.setObj(userinfoDate);
+        }else{
+            message.setStatusCode(500);
+            message.setMsg("error");
+        }
+        return message;
+    }
+
+    // select * from  userinfo  where username=#{username} and password=#{password}
+    @Override
+    public Message verifyUserinfoFun1(Userinfo userinfo) {
+        Message message=new Message();
+        LoginUserinfoBean loginUserinfoBean=new LoginUserinfoBean();
+        loginUserinfoBean.setUsername(userinfo.getUsername());
+        loginUserinfoBean.setPassword(userinfo.getPassword());
+        QueryWrapper<Userinfo> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("username",loginUserinfoBean.getUsername())
+                .eq("password",loginUserinfoBean.getPassword());
+        //username=#{username}   map.key=#{map.value}
+        List<Userinfo> list=userinfoMapper.selectList(queryWrapper);
+
+        if(list.size()<1){
+            message.setStatusCode(400);
+            message.setMsg("Error username or password");
+        }else if(list.size()==1){
+            Userinfo u1=list.get(0);
+            if(u1.getStatus()==1){
+                message.setStatusCode(200);
+                message.setMsg("ok");
+                message.setObj(u1);
+            }else if(u1.getStatus()==0){
+                message.setStatusCode(501);
+                message.setMsg("Contact to system admin");
+                message.setObj(u1);
+            }
+        }else{
+            message.setStatusCode(500);
+            message.setMsg("system error");
+        }
+        return message;
+    }
+
+
+    @Override
+    public Message verifyUserinfoFun2(Userinfo userinfo) {
+
+        Message message=new Message();
+        LoginUserinfoBean loginUserinfoBean=new LoginUserinfoBean();
+        loginUserinfoBean.setUsername(userinfo.getUsername());
+        loginUserinfoBean.setPassword(userinfo.getPassword());
+
+        QueryWrapper<Userinfo> queryWrapper=new QueryWrapper<>();
+        queryWrapper.select("count(*) countnum").eq("username",loginUserinfoBean.getUsername())
+                .eq("password",loginUserinfoBean.getPassword()).eq("status",1);
+
+        List<Map<String,Object>> list= userinfoMapper.selectMaps(queryWrapper);
+        int countnum=0;
+        Iterator<Map<String,Object>> iterator=list.iterator();
+        while(iterator.hasNext()){
+            Map resultmap=iterator.next();
+            long longnum=(long)resultmap.get("countnum");
+            countnum=Long.valueOf(longnum).intValue();
+        }
+
+        if(countnum<1){
+            message.setStatusCode(400);
+            message.setMsg("Error username or password");
+        }else if(countnum==1){
+
+            message.setStatusCode(200);
+            message.setMsg("ok");
+        }else{
+            message.setStatusCode(500);
+            message.setMsg("system error");
+        }
+        return message;
+    }
+    @Override
+    public Message verifyUserinfoFun22(Userinfo userinfo) {
+
+        Message message=new Message();
+        LoginUserinfoBean loginUserinfoBean=new LoginUserinfoBean();
+        loginUserinfoBean.setUsername(userinfo.getUsername());
+        loginUserinfoBean.setPassword(userinfo.getPassword());
+        QueryWrapper<Userinfo> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("username",loginUserinfoBean.getUsername())
+                .eq("password",loginUserinfoBean.getPassword()).eq("status",1);
+        int countnum=0;
+        countnum= userinfoMapper.selectCount(queryWrapper);
+        if(countnum<1){
+            message.setStatusCode(400);
+            message.setMsg("Error username or password");
+        }else if(countnum==1){
+
+            message.setStatusCode(200);
+            message.setMsg("ok");
+        }else{
+            message.setStatusCode(500);
+            message.setMsg("system error");
+        }
+
+//        System.out.println(message);
+        return message;
+
+
+
+    }
+    @Override
+    public Message verifyUserinfoFun3(Userinfo userinfo) {
+        Message message=new Message();
+        LoginUserinfoBean loginUserinfoBean=new LoginUserinfoBean();
+        loginUserinfoBean.setUsername(userinfo.getUsername());
+        loginUserinfoBean.setPassword(userinfo.getPassword());
+        QueryWrapper<Userinfo> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("username",loginUserinfoBean.getUsername())
+                .eq("password",loginUserinfoBean.getPassword()).eq("status",1);
+        Userinfo userinfoResult=null;
+        int flag=0;
+        try {
+            userinfoResult = userinfoMapper.selectOne(queryWrapper);
+        }catch (Exception e){
+            flag=1;
+            message.setStatusCode(500);
+            message.setMsg(e.getMessage());
+        }
+        if(flag==1){
+            return message;
+        }
+        if(userinfoResult==null){
+            message.setStatusCode(400);
+            message.setMsg("Error username or password");
+        }else{
+
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(userinfoResult);
+        }
         return message;
     }
 }

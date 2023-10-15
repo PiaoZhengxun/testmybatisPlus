@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neusoft.testmybatisplus.mapper.DeptMapper">
 
+
     <resultMap id="deptempMap" type="Dept">
         <id property="deptno" column="deptno"/>
         <result property="dname" column="dname"/>
@@ -16,12 +17,17 @@
             <result property="comm" column="comm"/>
             <result property="deptno" column="deptno"/>
         </collection>
+
     </resultMap>
 
+
+
     <select id="findDeptEmpByDeptno" parameterType="int" resultMap="deptempMap">
+
         select emp.* ,  dept.*
         from emp join dept on(emp.deptno=dept.deptno)
         where emp.deptno=#{deptno}
+
     </select>
 
 </mapper>

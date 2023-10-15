@@ -2,17 +2,17 @@ package com.neusoft.testmybatisplus.dto;
 
 import java.io.Serializable;
 
-public class QueryCondition1 implements Serializable {
+public class QueryCondition5 implements Serializable {
 
-    private int empno;
+    private String dateStr;
     private int deptno;
 
-    public int getEmpno() {
-        return empno;
+    public String getDateStr() {
+        return dateStr;
     }
 
-    public void setEmpno(int empno) {
-        this.empno = empno;
+    public void setDateStr(String dateStr) {
+        this.dateStr = "'"+dateStr+"'";
     }
 
     public int getDeptno() {
@@ -25,8 +25,8 @@ public class QueryCondition1 implements Serializable {
 
     @Override
     public String toString() {
-        return "QueryConditon1{" +
-                "empno=" + empno +
+        return "QueryCondition5{" +
+                "dateStr='" + dateStr + '\'' +
                 ", deptno=" + deptno +
                 '}';
     }

@@ -2,141 +2,47 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neusoft.testmybatisplus.mapper.UserinfoMapper">
 
-    <insert id="insertUserInfo" parameterType="Userinfo" >
+    <insert id="insertUserinfo" parameterType="Userinfo">
         insert into userinfo(username,nickname,password,age,hiredate,email,status)
         values(#{username},#{nickname},#{password},#{age},#{hiredate},#{email},#{status})
     </insert>
-    <insert id="insertUserInfo2" parameterType="Userinfo">
+
+    <insert id="insertUserinfo2" parameterType="Userinfo">
         <selectKey keyProperty="userid" resultType="int" order="AFTER">
             select LAST_INSERT_ID()
         </selectKey>
-            insert into userinfo(username,nickname,password,age,hiredate,email,status)
-            values(#{username},#{nickname},#{password},#{age},#{hiredate},#{email},#{status})
-    </insert>
 
-    <insert id="insertUserInfo22" parameterType="Userinfo" useGeneratedKeys="true" keyProperty="userid">
         insert into userinfo(username,nickname,password,age,hiredate,email,status)
         values(#{username},#{nickname},#{password},#{age},#{hiredate},#{email},#{status})
     </insert>
-    <delete id="deleteUserinfoByUserid" parameterType="int">
-        delete from userinfo where userid=#{userid}
-    </delete>
 
-    <select id="verifyUserinfo" resultType="Userinfo" parameterType="Userinfo">
-        select userid,nickname,status from userinfo
+
+    <insert id="insertUserinfo22" parameterType="Userinfo" useGeneratedKeys="true" keyProperty="userid">
+        insert into userinfo(username,nickname,password,age,hiredate,email,status)
+        values(#{username},#{nickname},#{password},#{age},#{hiredate},#{email},#{status})
+
+    </insert>
+
+    <insert id="insertUserinfo23" parameterType="UserinfoDate" useGeneratedKeys="true" keyProperty="userid">
+        insert into userinfo(username,nickname,password,age,hiredate,email,status)
+        values(#{username},#{nickname},#{password},#{age},#{hiredate},#{email},#{status})
+
+    </insert>
+
+    <select id="verifyUserinfo" parameterType="Userinfo" resultType="Userinfo">
+
+        select  userid,nickname,status from userinfo
         where username=#{username} and password=#{password}
-    </select>
-    <select id="getUserinfoByUserid" resultType="Userinfo" parameterType="int">
-        select * from userinfo where userid=#{userid}
-    </select>
-    <select id="findUserinfoByCondition" resultType="Userinfo" parameterType="QueryCondition4">
-        select * from userinfo
-        <where>
-            <if test="username!=null and username!=''">
-                or username like concat('%',#{username},'%')
-            </if>
-            <if test="userid!=null and userid!=''">
-                or userid = #{userid}
-            </if>
-        </where>
-    </select>
-    <select id="findUserinfoByCondition4" resultType="Userinfo" parameterType="QueryCondition4">
-        select * from userinfo
-        <where>
-            <choose>
-                <when test="userid!=null and userid!=''">
-                    and userid = #{userid}
-                </when>
-                <when test="username!=null and username!=''">
-                    and username like concat('%',#{username},'%')
-                </when>
-                <otherwise>
-                    and 1=0
-                </otherwise>
-            </choose>
-        </where>
-    </select>
 
-    <select id="findUserinfoByCondition2" parameterType="QueryCondition4" resultType="Userinfo">
-        select * from userinfo
-        <trim prefix="where " prefixOverrides="or">
-            <if test="username!=null and username!=''">
-                or username like concat('%',#{username},'%')
-            </if>
-            <if test="userid!=null and userid!=''">
-                or userid = #{userid}
-            </if>
-        </trim>
-
-    </select>
-    <select id="findUserinfoByUserids" resultType="Userinfo" parameterType="int[]">
-        select * from userinfo  where userid in
-        <foreach collection="array" item="userid" open="(" close=")" separator=",">
-            #{userid}
-        </foreach>
-    </select>
-
-    <resultMap type="DeptInfo" id="deptinfoMap">
-        <id property="deptno" column="deptno"/>
-        <result property="deptname" column="dname"/>
-        <result property="deptloc" column="loc"/>
-        <result property="empcountnum" column="countnum"/>
-    </resultMap>
-
-    <select id="findAllDeptInfo" resultMap="deptinfoMap">
-        select dept.*,count(*) countnum
-        from emp join dept on(emp.deptno=dept.deptno)
-        group by emp.deptno
-    </select>
-
-    <select id="findAllDeptInfo2" resultType="DeptInfo">
-        select dept.deptno deptno ,dept.dname deptname ,dept.loc deptloc,  count(*) empcountnum
-        from emp join dept on(emp.deptno=dept.deptno)
-        group by emp.deptno
-    </select>
-
-    <resultMap type="DeptInfo2" id="deptInfo2Map">
-        <result property="empcountnum" column="empcountnum"/>
-        <association property="dept" javaType="Dept">
-            <id property="deptno" column="deptno"/>
-            <result property="dname" column="dname"/>
-            <result property="loc" column="loc"/>
-        </association>
-    </resultMap>
-
-    <select id="findAllDeptInfo3"  resultMap="deptInfo2Map">
-        select dept.* ,  count(*) empcountnum
-        from emp join dept on(emp.deptno=dept.deptno)
-        group by emp.deptno
-    </select>
-
-    <resultMap id="empdeptMap" type="Emp">
-        <id property="empno" column="empno"/>
-        <result property="ename" column="ename"/>
-        <result property="job" column="job"/>
-        <result property="mgr" column="mgr"/>
-        <result property="hiredate" column="hiredate"/>
-        <result property="sal" column="sal"/>
-        <result property="comm" column="comm"/>
-        <result property="deptno" column="deptno"/>
-        <association property="dept" javaType="Dept">
-            <id property="deptno" column="deptno"/>
-            <result property="dname" column="dname"/>
-            <result property="loc" column="loc"/>
-        </association>
-    </resultMap>
-
-    <select id="findEmpDeptByEmpno" parameterType="int" resultMap="empdeptMap">
-        select emp.* ,  dept.*
-        from emp join dept on(emp.deptno=dept.deptno)
-        where empno=#{empno}
     </select>
 
     <update id="updateUserinfoByUserid" parameterType="Userinfo">
         update userinfo  set username=#{username},password=#{password},
                              nickname=#{nickname},age=#{age},hiredate=#{hiredate},
                              email=#{email} where userid=#{userid}
+
     </update>
+
     <update id="updateUserinfoByUserid2" parameterType="Userinfo">
         update userinfo
         <set>
@@ -159,7 +65,9 @@
                 email=#{email},
             </if>
         </set>
+
         where userid=#{userid}
+
     </update>
     <update id="updateUserinfoByUserid3" parameterType="Userinfo">
         update userinfo
@@ -182,7 +90,164 @@
             <if test="email!=null and email!=''">
                 email=#{email},
             </if>
+
         </trim>
+
+
         where userid=#{userid}
+
     </update>
+
+
+    <select id="getUserinfoByUserid" parameterType="int" resultType="Userinfo">
+        select * from userinfo where userid=#{userid}
+    </select>
+
+
+    <delete id="deleteUserinfoByUserid" parameterType="int">
+        delete from userinfo where userid=#{userid}
+
+    </delete>
+
+
+
+    <select id="findUserinfoByCondition" parameterType="QueryCondition4" resultType="Userinfo">
+        select * from userinfo
+        <where>
+            <if test="username!=null and username!=''">
+                or username like concat('%',#{username},'%')
+            </if>
+            <if test="userid!=null and userid!=''">
+                or userid = #{userid}
+            </if>
+        </where>
+
+    </select>
+
+    <select id="findUserinfoByCondition2" parameterType="QueryCondition4" resultType="Userinfo">
+        select * from userinfo
+        <trim prefix="where " prefixOverrides="or">
+            <if test="username!=null and username!=''">
+                or username like concat('%',#{username},'%')
+            </if>
+            <if test="userid!=null and userid!=''">
+                or userid = #{userid}
+            </if>
+        </trim>
+
+    </select>
+
+
+
+
+    <select id="findUserinfoByCondition4" parameterType="QueryCondition4" resultType="Userinfo">
+        select * from userinfo
+        <where>
+            <choose>
+                <when test="userid!=null and userid!=''">
+                    and userid = #{userid}
+                </when>
+                <when test="username!=null and username!=''">
+                    and username like concat('%',#{username},'%')
+                </when>
+                <otherwise>
+                    and 1=0
+                </otherwise>
+            </choose>
+        </where>
+
+    </select>
+
+
+
+    <select id="findUserinfoByUserids" parameterType="int" resultType="Userinfo">
+        select * from userinfo  where userid in
+        <foreach collection="array" item="userid" open="(" close=")" separator=",">
+            #{userid}
+        </foreach>
+    </select>
+
+    <resultMap type="DeptInfo" id="deptinfoMap">
+        <id property="deptno" column="deptno"/>
+        <result property="deptname" column="dname"/>
+        <result property="deptloc" column="loc"/>
+        <result property="empcountnum" column="countnum"/>
+    </resultMap>
+
+    <select id="findAllDeptInfo" resultMap="deptinfoMap">
+
+        select dept.*,count(*) countnum
+        from emp join dept on(emp.deptno=dept.deptno)
+        group by emp.deptno
+
+    </select>
+
+
+
+
+
+    <select id="findAllDeptInfo2" resultType="DeptInfo">
+
+        select dept.deptno deptno ,dept.dname deptname ,dept.loc deptloc,  count(*) empcountnum
+        from emp join dept on(emp.deptno=dept.deptno)
+        group by emp.deptno
+
+    </select>
+
+    <resultMap type="DeptInfo2" id="deptInfo2Map">
+
+        <result property="empcountnum" column="empcountnum"/>
+        <association property="dept" javaType="Dept">
+            <id property="deptno" column="deptno"/>
+            <result property="dname" column="dname"/>
+            <result property="loc" column="loc"/>
+        </association>
+
+    </resultMap>
+
+
+
+    <select id="findAllDeptInfo3"  resultMap="deptInfo2Map">
+
+        select dept.* ,  count(*) empcountnum
+        from emp join dept on(emp.deptno=dept.deptno)
+        group by emp.deptno
+
+    </select>
+
+    <resultMap id="empdeptMap" type="Emp">
+
+        <id property="empno" column="empno"/>
+        <result property="ename" column="ename"/>
+        <result property="job" column="job"/>
+        <result property="mgr" column="mgr"/>
+        <result property="hiredate" column="hiredate"/>
+        <result property="sal" column="sal"/>
+        <result property="comm" column="comm"/>
+        <result property="deptno" column="deptno"/>
+
+        <association property="dept" javaType="Dept">
+            <id property="deptno" column="deptno"/>
+            <result property="dname" column="dname"/>
+            <result property="loc" column="loc"/>
+        </association>
+
+
+    </resultMap>
+
+
+
+    <select id="findEmpDeptByEmpno" parameterType="int" resultMap="empdeptMap">
+
+        select emp.* ,  dept.*
+        from emp join dept on(emp.deptno=dept.deptno)
+        where empno=#{empno}
+
+    </select>
+
+
+
+
+
+
 </mapper>

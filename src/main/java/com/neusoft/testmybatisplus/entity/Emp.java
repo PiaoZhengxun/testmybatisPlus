@@ -42,8 +42,10 @@ public class Emp implements Serializable {
     @TableField("DEPTNO")
     private Integer deptno;
 
-    @TableField(exist = false)
+
+    @TableField(exist=false)
     private Dept dept;
+
 
     public Dept getDept() {
         return dept;
@@ -120,14 +122,14 @@ public class Emp implements Serializable {
     @Override
     public String toString() {
         return "Emp{" +
-        "empno=" + empno +
-        ", ename=" + ename +
-        ", job=" + job +
-        ", mgr=" + mgr +
-        ", hiredate=" + hiredate +
-        ", sal=" + sal +
-        ", comm=" + comm +
-        ", deptno=" + deptno +
-        "}";
+                "empno=" + empno +
+                ", ename=" + ename +
+                ", job=" + job +
+                ", mgr=" + mgr +
+                ", hiredate=" + hiredate +
+                ", sal=" + sal +
+                ", comm=" + comm +
+                ", deptno=" + deptno +
+                "}";
     }
 }

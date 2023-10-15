@@ -20,27 +20,23 @@ public class Dept implements Serializable {
     @TableId("DEPTNO")
     private Integer deptno;
 
+
+
+
     @TableField("DNAME")
     private String dname;
 
     @TableField("LOC")
     private String loc;
 
-    private List<Emp> emps;
 
-    @Override
-    public String toString() {
-        return "Dept{" +
-                "deptno=" + deptno +
-                ", dname='" + dname + '\'' +
-                ", loc='" + loc + '\'' +
-                ", emps=" + emps +
-                '}';
-    }
+    private List<Emp> emps;
 
     public List<Emp> getEmps() {
         return emps;
     }
+
+
 
     public void setEmps(List<Emp> emps) {
         this.emps = emps;
@@ -68,6 +64,16 @@ public class Dept implements Serializable {
 
     public void setLoc(String loc) {
         this.loc = loc;
+    }
+
+    @Override
+    public String toString() {
+        return "Dept{" +
+                "deptno=" + deptno +
+                ", dname='" + dname + '\'' +
+                ", loc='" + loc + '\'' +
+                ", emps=" + emps +
+                '}';
     }
 
 }

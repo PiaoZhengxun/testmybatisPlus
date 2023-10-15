@@ -30,5 +30,4 @@ public class LoginUserinfoBean implements Serializable {
                 ", password='" + password + '\'' +
                 '}';
     }
-
 }

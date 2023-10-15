@@ -3,6 +3,7 @@ package com.neusoft.testmybatisplus.mapper;
 import com.neusoft.testmybatisplus.dto.DeptInfo;
 import com.neusoft.testmybatisplus.dto.DeptInfo2;
 import com.neusoft.testmybatisplus.dto.QueryCondition4;
+import com.neusoft.testmybatisplus.dto.UserinfoDate;
 import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.entity.Userinfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -23,20 +24,27 @@ import java.util.List;
 @Repository
 public interface UserinfoMapper extends BaseMapper<Userinfo> {
 
-    public int insertUserInfo(Userinfo userinfo);
-    public int insertUserInfo2(Userinfo userinfo);
-    public int insertUserInfo22(Userinfo userinfo);
+
+    public int insertUserinfo(Userinfo userinfo);
+    public int insertUserinfo2(Userinfo userinfo);
+    public int insertUserinfo22(Userinfo userinfo);
+
+    public int insertUserinfo23(UserinfoDate userinfoDate);
+
+
 
     public List<Userinfo> verifyUserinfo(Userinfo userinfo);
 
-    //update userinfo by userid
+    // update userinfoby userid
     public int updateUserinfoByUserid(Userinfo userinfo);
     public int updateUserinfoByUserid2(Userinfo userinfo);
     public int updateUserinfoByUserid3(Userinfo userinfo);
 
+
     public Userinfo getUserinfoByUserid(int userid);
 
     public int deleteUserinfoByUserid(int userid);
+
 
     public List<Userinfo> findUserinfoByCondition(QueryCondition4 queryCondition4);
     public List<Userinfo> findUserinfoByCondition2(QueryCondition4 queryCondition4);
@@ -46,10 +54,16 @@ public interface UserinfoMapper extends BaseMapper<Userinfo> {
     public List<Userinfo> findUserinfoByUserids(int[] userids);
 
     public List<DeptInfo> findAllDeptInfo();
+
     public List<DeptInfo> findAllDeptInfo2();
+
+
     public List<DeptInfo2> findAllDeptInfo3();
 
-    public Emp findEmpDeptByEmpno(int empno);
+
+    public Emp  findEmpDeptByEmpno(int empno);
+
+
 
 
 

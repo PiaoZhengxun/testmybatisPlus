@@ -1,13 +1,19 @@
 package com.neusoft.testmybatisplus;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.neusoft.testmybatisplus.config.MyCommonUtil;
 import com.neusoft.testmybatisplus.dto.LoginUserinfoBean;
 import com.neusoft.testmybatisplus.dto.Message;
+import com.neusoft.testmybatisplus.dto.QueryCondition2;
+import com.neusoft.testmybatisplus.dto.UserinfoDate;
 import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.entity.Userinfo;
 import com.neusoft.testmybatisplus.mapper.EmpMapper;
 import com.neusoft.testmybatisplus.mapper.UserinfoMapper;
 import com.neusoft.testmybatisplus.service.IEmpService;
+import com.neusoft.testmybatisplus.service.IUserinfoService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +32,9 @@ class TestmybatisplusApplicationTests {
 
     @Autowired
     UserinfoMapper userinfoMapper;
+
+    @Autowired
+    IUserinfoService iUserinfoService;
 
     @Autowired
     IEmpService iEmpService;
@@ -131,6 +140,24 @@ class TestmybatisplusApplicationTests {
 
 
     }
+    @Test
+    public void test100502(){
+        Userinfo userinfo= inputUserinfo(); // input
+        Message message=iUserinfoService.insertUserinfo3(userinfo); //test service
+//       MyCommonUtil myCommonUtil=new MyCommonUtil();
+        MyCommonUtil.printMessage(message);
+
+    }
+
+
+    @Test
+    public void test100503(){
+        UserinfoDate userinfoDate= inputUserinfoDate(); // input
+        Message message=iUserinfoService.insertUserinfo4(userinfoDate); //test service
+//       MyCommonUtil myCommonUtil=new MyCommonUtil();
+        MyCommonUtil.printMessage(message);
+
+    }
 
 
     // select * from userinfo
@@ -143,7 +170,7 @@ class TestmybatisplusApplicationTests {
         queryWrapper
                 .eq("username",loginUserinfoBean.getUsername())
                 .eq("password",loginUserinfoBean.getPassword());
-// select * from userinfo where username= junghoon  and   password=1218
+// select * from userinfo where username= tom  and   password=123456
         List<Userinfo> list=userinfoMapper.selectList(queryWrapper);
         if(list.size()<1){
             message.setStatusCode(400);
@@ -163,8 +190,32 @@ class TestmybatisplusApplicationTests {
             message.setStatusCode(500);
             message.setMsg("system error");
         }
+
         System.out.println(message);
     }
+
+
+    @Test
+    public void test100602(){
+
+        LoginUserinfoBean loginUserinfoBean=inputUsernamePassword();//1. input
+
+        Userinfo userinfo=new Userinfo();                      //2.requestmapping
+        userinfo.setUsername(loginUserinfoBean.getUsername());  //set values to params
+        userinfo.setPassword(loginUserinfoBean.getPassword());
+
+
+        Message message=iUserinfoService.verifyUserinfoBySelectMap(userinfo);  //3. test service
+
+        printMessage(message);  //4. check the result
+    }
+
+
+
+
+
+
+
 
     @Test
     //select * from emp   where deptno =20  and  sal>1000
@@ -185,6 +236,108 @@ class TestmybatisplusApplicationTests {
 
 
     }
+
+
+    // select * from userinfo where sal>=800 and sal<=2000
+    @Test
+    public void test1009(){
+        QueryWrapper<Emp> queryWrapper=new QueryWrapper<>();
+//        queryWrapper.ge("sal",800).
+        queryWrapper.ge("sal",800).le("sal",2000);
+        List<Emp> list=empMapper.selectList(queryWrapper);
+        printList(list);
+    }
+    @Test
+    public void test100902(){
+        QueryWrapper<Emp> queryWrapper=new QueryWrapper<>();
+        queryWrapper.between("sal",800,2000);
+        List<Emp> list=empMapper.selectList(queryWrapper);
+        printList(list);
+
+    }
+    @Test
+    public void test100903(){
+
+        Message message=iEmpService.getEmpBySal(800,2000);
+        System.out.println(message);
+
+    }
+
+    @Test
+    public void test1010(){
+        QueryCondition2 queryCondition2=inputQueryCondition2();
+        Message message=iEmpService.getEmpsByQueryCondition2(queryCondition2);
+        printMessage(message);
+
+    }
+
+
+    @Test
+    public void test1011(){
+
+        QueryWrapper<Emp> queryWrapper=new QueryWrapper<>();
+        queryWrapper.orderByDesc("sal");
+
+        IPage<Emp> page = new Page<>(3, 2);
+        IPage<Emp> empIPage=empMapper.selectPage(page,queryWrapper);
+
+        printList(empIPage.getRecords());
+
+    }
+
+
+
+
+
+
+
+
+    private void printMessage(Message message){
+        if(message.getStatusCode()!=200){
+            System.err.println(message.getStatusCode());
+            System.err.println(message.getMsg());
+        }else{
+            System.out.println(message.getStatusCode());
+            System.out.println(message.getMsg());
+            if(message.getObj()!=null){
+                if(message.getObj() instanceof Collection){
+                    ((Collection) message.getObj()).forEach(System.out::println);
+                }else{
+                    System.out.println(message.getObj());
+                }
+            }
+
+        }
+
+
+
+
+    }
+
+
+    // input ename deptno
+    private QueryCondition2 inputQueryCondition2(){
+        QueryCondition2 queryCondition2=new QueryCondition2();
+        Scanner scanner=new Scanner(System.in);
+        String ename=null;
+        int deptno=0;
+
+        System.out.println("Input ename:");
+        ename=scanner.next();
+        System.out.println("Input deptno:");
+        deptno=scanner.nextInt();
+
+
+        queryCondition2.setEname(ename);
+        queryCondition2.setDeptno(deptno);
+
+
+        return queryCondition2;
+    }
+
+
+
+
 
     // input username password
     private Userinfo inputUserinfo(){
@@ -218,6 +371,36 @@ class TestmybatisplusApplicationTests {
         return userinfo;
     }
 
+    private UserinfoDate inputUserinfoDate(){
+        UserinfoDate userinfo=new UserinfoDate();
+        Scanner scanner=new Scanner(System.in);
+        String username=null;
+        String password=null;
+        String nickname=null;
+        String email=null;
+        int age=0;
+
+        System.out.println("Input Username:");
+        username=scanner.next();
+        System.out.println("Input Password:");
+        password=scanner.next();
+        System.out.println("Input nickname:");
+        nickname=scanner.next();
+        System.out.println("Input email:");
+        email=scanner.next();
+        System.out.println("Input age:");
+        age=scanner.nextInt();
+
+        userinfo.setUsername(username);
+        userinfo.setPassword(password);
+        userinfo.setNickname(nickname);
+        userinfo.setEmail(email);
+        userinfo.setAge(age);
+
+
+
+        return userinfo;
+    }
 
 
 
@@ -257,8 +440,15 @@ class TestmybatisplusApplicationTests {
         System.out.println("localDateTime: " + localDateTime);
     }
 
+
+
     @Test
     void contextLoads() {
+
+
+
     }
+
+
 
 }

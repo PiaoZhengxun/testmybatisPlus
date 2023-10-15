@@ -25,8 +25,8 @@ public class DeptController {
     IDeptService iDeptService;
 
     @GetMapping("findDeptEmpByDeptno")
-    public Message findDeptEmpByDeptno(int deptno) {
-        Message message = iDeptService.findDeptEmpByDeptno(deptno);
+    public Message findDeptEmpByDeptno(int deptno){
+        Message message= iDeptService.findDeptEmpByDeptno(deptno);
         return message;
     }
 

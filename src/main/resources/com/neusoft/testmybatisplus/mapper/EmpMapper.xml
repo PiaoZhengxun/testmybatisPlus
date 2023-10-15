@@ -2,30 +2,44 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neusoft.testmybatisplus.mapper.EmpMapper">
 
-
     <select id="findAll2" resultType="Emp">
-        select  * from emp
+        select * from emp
+
     </select>
-    <select id="getEmpByEmpno" parameterType="int" resultType="Emp">
-        select * from emp where empno=#{empno}
-    </select>
-    <select id="findByCondition1" resultType="Emp" parameterType="QueryCondition1">
+
+
+    <select id="findByCondtion" parameterType="QueryCondition1" resultType="Emp">
         select * from emp
         where deptno=#{deptno} or empno=#{empno}
+
     </select>
-    <select id="findByCondition2" resultType="Emp" parameterType="QueryCondition2">
-        select *
-        from emp
-        where ename
-        like concat('%',#{ename},'%') and deptno=#{deptno}
-    </select>
-    <select id="findBySal" resultType="Emp" parameterType="int">
+
+
+    <select id="findeByCondition2" parameterType="QueryCondition2" resultType="Emp">
         select * from emp
-        where sal &gt; #{sal}
+        where ename like concat('%',#{ename},'%')  and deptno=#{deptno}
     </select>
-    <select id="findEmpByEnameAndEmpno" resultType="int" parameterType="QueryCondition3">
+
+
+    <select id="findeBySal" parameterType="int" resultType="Emp">
+
+        select * from emp
+        where  sal  >  #{sal}
+
+    </select>
+
+    <select id="findEmpByEnameAndEmpno" parameterType="QueryCondition3" resultType="int">
         select count(*) from emp
         where empno=#{empno} and ename=#{ename}
+
+
+    </select>
+
+
+    <select id="getEmpByEmpno" parameterType="int" resultType="Emp">
+
+        select * from emp where empno=#{empno}
+
     </select>
 
 

@@ -1,19 +1,16 @@
-package com.neusoft.testmybatisplus.entity;
+package com.neusoft.testmybatisplus.dto;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author junghoon
- * @since 2023-09-24
- */
-public class Userinfo implements Serializable {
+import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+
+public class UserinfoDate implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -30,6 +27,7 @@ public class Userinfo implements Serializable {
     private Integer age;
 
     private LocalDate hiredate;
+
 
     private String email;
 
@@ -78,13 +76,36 @@ public class Userinfo implements Serializable {
         this.age = age;
     }
 
+
+
     public LocalDate getHiredate() {
         return hiredate;
     }
 
+
     public void setHiredate(LocalDate hiredate) {
+
         this.hiredate = hiredate;
+
     }
+    public void setHiredateByJavaUtilDate(Date date){
+        this.hiredate = changejavautilDateToLocaldate(date);
+    }
+
+
+
+
+    private LocalDate changejavautilDateToLocaldate(Date date){
+        Instant instant = date.toInstant();
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        LocalDate localDate = localDateTime.toLocalDate();
+        return localDate;
+    }
+
+
+
+
+
 
     public String getEmail() {
         return email;
@@ -124,4 +145,5 @@ public class Userinfo implements Serializable {
                 ", icon=" + icon +
                 "}";
     }
+
 }

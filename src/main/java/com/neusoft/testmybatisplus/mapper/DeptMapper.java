@@ -19,10 +19,14 @@ import java.util.List;
 @Repository
 public interface DeptMapper extends BaseMapper<Dept> {
 
-    public Dept findDeptEmpByDeptno(int deptno);
 
+    public Dept findDeptEmpByDeptno(int deptno);
+    //
     @Select("select * from dept where deptno=#{deptno}")
     public Dept findDeptByDeptno(int deptno);
+
+
+
 
     @Select("select * from dept where deptno=#{deptno}")
     @Results(id = "deptempMap2" , value={
