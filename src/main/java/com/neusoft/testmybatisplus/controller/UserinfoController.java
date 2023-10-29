@@ -1,9 +1,8 @@
 package com.neusoft.testmybatisplus.controller;
 
 
-import com.neusoft.testmybatisplus.dto.Message;
-import com.neusoft.testmybatisplus.dto.PageCondition;
-import com.neusoft.testmybatisplus.dto.QueryCondition4;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.neusoft.testmybatisplus.dto.*;
 import com.neusoft.testmybatisplus.entity.Userinfo;
 import com.neusoft.testmybatisplus.mapper.UserinfoMapper;
 import com.neusoft.testmybatisplus.service.IUserinfoService;
@@ -30,6 +29,8 @@ public class UserinfoController {
         Message message=iUserinfoService.insertUserinfo(userinfo);
         return message;
     }
+
+
 
     @PostMapping("registerUserinfo2")
     public Message registerUserinfo2(@RequestBody  Userinfo userinfo){
@@ -91,6 +92,25 @@ public class UserinfoController {
         Message message=iUserinfoService.searchUserinfo();
         return message;
     }
+
+    @PostMapping("searchUserinfoByUserid")
+    public Message searchUserinfoByUserid(@RequestBody Userid userid){
+        Message message=new Message();
+        QueryWrapper<Userinfo> queryWrapper= new QueryWrapper<>();
+        queryWrapper.eq("userid",userid.getUserid());
+        Userinfo userinfo=iUserinfoService.getOne(queryWrapper);
+        message.setStatusCode(200);
+        message.setObj(userinfo);
+        message.setMsg("ok");
+        return message;
+    }
+
+    @PostMapping("searchUserinfoByUserinfoPageCondition")
+    public Message searchUserinfoByUserinfoPageCondition(@RequestBody UserinfoPageCondition userinfoPageCondition){
+        Message message=iUserinfoService.searchUserinfoByUserinfoPageCondition(userinfoPageCondition);
+        return message;
+    }
+
 
     @GetMapping("searchUserinfoByPageCondition")
     public Message searchUserinfo(PageCondition pageCondition){

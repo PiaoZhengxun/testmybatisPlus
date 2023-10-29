@@ -4,13 +4,22 @@ import com.neusoft.testmybatisplus.dto.LoginUserinfoBean;
 import com.neusoft.testmybatisplus.dto.Message;
 import com.neusoft.testmybatisplus.entity.Userinfo;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
 
 public class MyCommonUtil {
 
+
+   public static LocalDate javaUtilDateToLocalDate(Date date){
+//       Date date = new Date();
+       Instant instant = date.toInstant();
+       LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+       LocalDate localDate = localDateTime.toLocalDate();
+       return localDate;
+   }
 
 
     public static void printMessage(Message message){

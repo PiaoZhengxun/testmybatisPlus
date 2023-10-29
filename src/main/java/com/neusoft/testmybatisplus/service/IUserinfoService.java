@@ -36,6 +36,7 @@ public interface IUserinfoService extends IService<Userinfo> {
 
     public Message searchUserinfo();
     public Message searchUserinfoByPageCondition(PageCondition pageCondition);
+    public Message searchUserinfoByUserinfoPageCondition(UserinfoPageCondition userinfoPageCondition);
     public Message findUserinfoByUserids(int[] userids);
     public Message findAllDeptInfo();
     public Message findAllDeptInfo2();

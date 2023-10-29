@@ -3,6 +3,7 @@ package com.neusoft.testmybatisplus.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.neusoft.testmybatisplus.config.MyCommonUtil;
 import com.neusoft.testmybatisplus.dto.*;
 import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.entity.Userinfo;
@@ -328,6 +329,7 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     public Message searchUserinfoByPageCondition(PageCondition pageCondition) {
         Message message=new Message();
         QueryWrapper<Userinfo> queryWrapper=new QueryWrapper();
+//        queryWrapper.eq("status",1);
         queryWrapper.orderByAsc("userid");
 
         IPage<Userinfo> page = new Page<>(pageCondition.getCurrentPage(), pageCondition.getPageSize());
@@ -347,6 +349,37 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
 
 
 
+    }
+
+    @Override
+    public Message searchUserinfoByUserinfoPageCondition(UserinfoPageCondition userinfoPageCondition) {
+        Message message=new Message();
+        QueryWrapper<Userinfo> queryWrapper=new QueryWrapper<>();
+        UserinfoCondition userinfoCondition=userinfoPageCondition.getUserinfoCondition();
+
+        queryWrapper
+                .eq(userinfoCondition.getStatus()!=-1,
+                        "status",
+                        userinfoCondition.getStatus()).
+                and(qw2->qw2.eq("userid",userinfoCondition.getUserid())
+                        .or().like("username",userinfoCondition.getUsername())
+                        .or().between("hiredate",userinfoCondition.getHiredateStart(),userinfoCondition.getHiredateEnd()));
+
+
+        PageCondition pageCondition=userinfoPageCondition.getPageCondition();
+        IPage<Userinfo> page = new Page<>(pageCondition.getCurrentPage(), pageCondition.getPageSize());
+        IPage<Userinfo> empIPage=userinfoMapper.selectPage(page,queryWrapper);
+
+        if(empIPage.getTotal()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(empIPage);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
     }
 
     @Override
@@ -437,10 +470,10 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
 //        Userinfo userinfo= inputUserinfo();
         userinfo.setStatus(1);
         Date date = new Date();
-        Instant instant = date.toInstant();
-        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
-        LocalDate localDate = localDateTime.toLocalDate();
-        userinfo.setHiredate(localDate);
+//        Instant instant = date.toInstant();
+//        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+//        LocalDate localDate = localDateTime.toLocalDate();
+        userinfo.setHiredate(MyCommonUtil.javaUtilDateToLocalDate(date));
         Message message=new Message();
 //        int num=userinfoMapper.insertUserinfo(userinfo);
         int num=userinfoMapper.insert(userinfo);
