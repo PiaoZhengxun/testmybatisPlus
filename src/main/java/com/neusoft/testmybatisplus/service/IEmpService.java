@@ -3,6 +3,7 @@ package com.neusoft.testmybatisplus.service;
 import com.neusoft.testmybatisplus.dto.*;
 import com.neusoft.testmybatisplus.entity.Emp;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -11,10 +12,11 @@ import java.util.List;
  *  服务类
  * </p>
  *
- * @author junghoon
- * @since 2023-09-21
+ * @author yhc
+ * @since 2023-09-18
  */
 public interface IEmpService extends IService<Emp> {
+
 
     public Message getAllEmps2();
 
@@ -81,23 +83,23 @@ public interface IEmpService extends IService<Emp> {
 
 
 
-    //    ename like 's%' and (sal < 2000 or comm is not null)
+//    ename like 's%' and (sal < 2000 or comm is not null)
     public Message getEmpsByQueryCondition6(QueryCondition6 queryCondition6);
 
-    //    ename like 's%' or (sal < 2000 and sal > 1000 and comm is not null)
-    public Message getEmpsByQueryCondition62(QueryCondition6 queryCondition62);
+//    ename like 's%' or (sal < 2000 and sal > 1000 and comm is not null)
+     public Message getEmpsByQueryCondition62(QueryCondition6 queryCondition62);
 
 
-    //   (sal < 2000 or comm is not null) and name like 'm%'
+//   (sal < 2000 or comm is not null) and name like 'm%'
     public Message getEmpsByQueryCondition63(QueryCondition6 queryCondition63);
 
 
-    //    select * from emp
+//    select * from emp
 //    where empno in (7369,7499,7521)
 //    limit 0,1
     public Message getEmpsByIdsAndLimit(List ids);
 
-    //    select EMPNO,ENAME,JOB,MGR,HIREDATE,SAL
+//    select EMPNO,ENAME,JOB,MGR,HIREDATE,SAL
 //    from
 //    where ename like '%m%' and sal < 3000
     public Message getEmpsByQueryCondition64(QueryCondition6 queryCondition6);
@@ -105,4 +107,12 @@ public interface IEmpService extends IService<Emp> {
 
 
     public Message getEmpGroupbySum(int sumval);
+
+
+
+
+
+
+
 }
+

@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  *  服务类
  * </p>
  *
- * @author junghoon
- * @since 2023-09-21
+ * @author yhc
+ * @since 2023-09-18
  */
 public interface IDeptService extends IService<Dept> {
 
@@ -19,5 +19,4 @@ public interface IDeptService extends IService<Dept> {
     public Message findDeptEmpByDeptno2(int deptno);
 
     public Message findDeptEmp();
-
 }

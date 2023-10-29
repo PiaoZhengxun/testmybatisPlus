@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+//import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /**
@@ -17,8 +18,8 @@ import java.util.List;
  *  Mapper 接口
  * </p>
  *
- * @author junghoon
- * @since 2023-09-24
+ * @author yhc
+ * @since 2023-09-19
  */
 @Mapper
 @Repository
@@ -62,9 +63,6 @@ public interface UserinfoMapper extends BaseMapper<Userinfo> {
 
 
     public Emp  findEmpDeptByEmpno(int empno);
-
-
-
 
 
 

@@ -2,6 +2,8 @@ package com.neusoft.testmybatisplus.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDate;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
@@ -10,8 +12,8 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author junghoon
- * @since 2023-09-24
+ * @author yhc
+ * @since 2023-09-19
  */
 public class Userinfo implements Serializable {
 
@@ -113,15 +115,15 @@ public class Userinfo implements Serializable {
     @Override
     public String toString() {
         return "Userinfo{" +
-                "userid=" + userid +
-                ", username=" + username +
-                ", nickname=" + nickname +
-                ", password=" + password +
-                ", age=" + age +
-                ", hiredate=" + hiredate +
-                ", email=" + email +
-                ", status=" + status +
-                ", icon=" + icon +
-                "}";
+        "userid=" + userid +
+        ", username=" + username +
+        ", nickname=" + nickname +
+        ", password=" + password +
+        ", age=" + age +
+        ", hiredate=" + hiredate +
+        ", email=" + email +
+        ", status=" + status +
+        ", icon=" + icon +
+        "}";
     }
 }

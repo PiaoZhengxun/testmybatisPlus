@@ -1,14 +1,7 @@
 package com.neusoft.testmybatisplus.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
 import java.io.Serializable;
 
-@Getter
-@Setter
-@ToString
 public class QueryCondition6 implements Serializable {
 
 
@@ -18,5 +11,45 @@ public class QueryCondition6 implements Serializable {
 
     private Boolean commIsNotNull;
 
+    public Double getLowsal() {
+        return lowsal;
+    }
 
+    public void setLowsal(Double lowsal) {
+        this.lowsal = lowsal;
+    }
+
+    public String getStartLetter() {
+        return startLetter;
+    }
+
+    public void setStartLetter(String startLetter) {
+        this.startLetter = startLetter;
+    }
+
+    public Double getHighsal() {
+        return highsal;
+    }
+
+    public void setHighsal(Double highsal) {
+        this.highsal = highsal;
+    }
+
+    public Boolean getCommIsNotNull() {
+        return commIsNotNull;
+    }
+
+    public void setCommIsNotNull(Boolean commIsNotNull) {
+        this.commIsNotNull = commIsNotNull;
+    }
+
+    @Override
+    public String toString() {
+        return "QueryCondition6{" +
+                "startLetter='" + startLetter + '\'' +
+                ", highsal=" + highsal +
+                ", lowsal=" + lowsal +
+                ", commIsNotNull=" + commIsNotNull +
+                '}';
+    }
 }

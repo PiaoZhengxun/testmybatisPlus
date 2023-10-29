@@ -3,13 +3,18 @@ package com.neusoft.testmybatisplus.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.neusoft.testmybatisplus.dto.*;
 import com.neusoft.testmybatisplus.entity.Emp;
+import com.neusoft.testmybatisplus.entity.Userinfo;
 import com.neusoft.testmybatisplus.mapper.EmpMapper;
 import com.neusoft.testmybatisplus.service.IEmpService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,13 +23,11 @@ import java.util.Map;
  *  服务实现类
  * </p>
  *
- * @author junghoon
- * @since 2023-09-21
+ * @author yhc
+ * @since 2023-09-18
  */
 @Service
 public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpService {
-
-
 
     @Autowired
     EmpMapper empMapper;
@@ -74,7 +77,7 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
 
     @Override
     public Message findeByCondition2(QueryCondition2 queryCondition2) {
-        Message message=new Message();
+         Message message=new Message();
         List<Emp> list=empMapper.findeByCondition2(queryCondition2);
 
         if(list.size()>0){
@@ -342,7 +345,11 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
         QueryWrapper<Emp> queryWrapper=new QueryWrapper<>();
         queryWrapper.likeRight("ename",queryCondition2.getEname())
                 .or().eq("deptno",queryCondition2.getDeptno());
+
+
+
         List<Emp> list=empMapper.selectList(queryWrapper);
+
         if(list.size()>0){
             message.setStatusCode(200);
             message.setMsg("ok");
@@ -351,11 +358,14 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
             message.setStatusCode(400);
             message.setMsg("error");
         }
+
         return message;
     }
 
     //    select * from emp
-    //QueryWrapper<Emp> qw=  Wrappers.query();
+
+
+//QueryWrapper<Emp> qw=  Wrappers.query();
 //        qw.apply("date_format( hiredate,'%Y-%m-%d')="+datestr)
 //                .inSql("mgr","select empno from emp where ename like 'k%'");
     @Override
@@ -371,14 +381,14 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
 //                .apply("date_format( hiredate,'%Y-%m-%d')="
 //                        +queryCondition5.getDateStr())
 
-                .apply("date_format( hiredate,'%Y-%m-%d')= {0}",
-                        queryCondition5.getDateStr())
+             .apply("date_format( hiredate,'%Y-%m-%d')= {0}",
+                     queryCondition5.getDateStr())
 
 
                 .or()
                 .inSql("empno",
                         "select empno from emp where deptno="
-                                +queryCondition5.getDeptno());
+                        +queryCondition5.getDeptno());
         List<Emp> list=empMapper.selectList(queryWrapper);
         if(list.size()>0){
             message.setStatusCode(200);
@@ -392,7 +402,7 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
         return message;
     }
 
-    //    ename like 's%' and (sal < 2000 or comm is not null)
+//    ename like 's%' and (sal < 2000 or comm is not null)
     @Override
     public Message getEmpsByQueryCondition6(QueryCondition6 queryCondition6) {
 
@@ -416,7 +426,7 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
         return message;
 
     }
-    //    ename like 's%' or
+//    ename like 's%' or
 //                   (sal < 2000
 //                     and sal > 1000
 //                     and comm is not null)
@@ -442,19 +452,19 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
 
         return message;
     }
-    //(sal < 2000 or comm is not null) and name like 'm%'
+  //(sal < 2000 or comm is not null) and name like 'm%'
     @Override
     public Message getEmpsByQueryCondition63(QueryCondition6 queryCondition63) {
 
         Message message=new Message();
         QueryWrapper<Emp> queryWrapper=new QueryWrapper<>();
         queryWrapper.nested(
-                        (qw2->qw2.lt("sal",queryCondition63.getHighsal())
-                                .or()
-                                .isNotNull(queryCondition63.getCommIsNotNull(),"comm"))
+                (qw2->qw2.lt("sal",queryCondition63.getHighsal())
+                .or()
+                .isNotNull(queryCondition63.getCommIsNotNull(),"comm"))
                 )
                 .likeRight("ename",queryCondition63.getStartLetter())
-        ;
+                ;
 
         List<Emp> list=empMapper.selectList(queryWrapper);
         if(list.size()>0){
@@ -470,7 +480,7 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
 
     }
 
-    //    select * from emp
+//    select * from emp
 //    where empno in (7369,7499,7521)
 //    limit 0,1
     @Override
@@ -498,7 +508,7 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
 
     }
 
-    //    select EMPNO,ENAME,JOB,MGR,HIREDATE,SAL
+//    select EMPNO,ENAME,JOB,MGR,HIREDATE,SAL
 //    from
 //    where ename like '%m%' and sal < 3000
     @Override
@@ -583,4 +593,12 @@ public class EmpServiceImpl extends ServiceImpl<EmpMapper, Emp> implements IEmpS
 
         return message;
     }
+
+
+
+
+
+
+
+
 }

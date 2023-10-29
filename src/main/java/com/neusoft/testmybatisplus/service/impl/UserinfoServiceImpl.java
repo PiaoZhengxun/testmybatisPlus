@@ -1,12 +1,15 @@
 package com.neusoft.testmybatisplus.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.neusoft.testmybatisplus.dto.*;
 import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.entity.Userinfo;
 import com.neusoft.testmybatisplus.mapper.UserinfoMapper;
 import com.neusoft.testmybatisplus.service.IUserinfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.ibatis.exceptions.TooManyResultsException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +24,8 @@ import java.util.*;
  *  服务实现类
  * </p>
  *
- * @author junghoon
- * @since 2023-09-24
+ * @author yhc
+ * @since 2023-09-19
  */
 @Service
 public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> implements IUserinfoService {
@@ -158,7 +161,7 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     }
 
     private Userinfo getUserinfoByUserid(int userid){
-        return  userinfoMapper.getUserinfoByUserid(userid);
+           return  userinfoMapper.getUserinfoByUserid(userid);
     }
 
     private Userinfo CheckUserinfoProperties(Userinfo userinfoParam,Userinfo userinfoDB){
@@ -189,7 +192,7 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
 
     @Override
     public Message updateUserinfoByUserid(Userinfo userinfo) {
-        Message message=new Message();
+            Message message=new Message();
 
         Userinfo userinfo1=getUserinfoByUserid(userinfo.getUserid());
         userinfo=CheckUserinfoProperties(userinfo,userinfo1);
@@ -301,6 +304,49 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
         }
 
         return message;
+    }
+
+    @Override
+    public Message searchUserinfo() {
+        Message message=new Message();
+        QueryWrapper queryWrapper=new QueryWrapper();
+        List<Userinfo> list= userinfoMapper.selectList(queryWrapper);
+        if(list.size()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(list);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+
+    }
+
+    @Override
+    public Message searchUserinfoByPageCondition(PageCondition pageCondition) {
+        Message message=new Message();
+        QueryWrapper<Userinfo> queryWrapper=new QueryWrapper();
+        queryWrapper.orderByAsc("userid");
+
+        IPage<Userinfo> page = new Page<>(pageCondition.getCurrentPage(), pageCondition.getPageSize());
+        IPage<Userinfo> empIPage=userinfoMapper.selectPage(page,queryWrapper);
+
+        if(empIPage.getTotal()>0){
+            message.setStatusCode(200);
+            message.setMsg("ok");
+            message.setObj(empIPage);
+        }else{
+            message.setStatusCode(400);
+            message.setMsg("error");
+        }
+
+        return message;
+
+
+
+
     }
 
     @Override
@@ -446,12 +492,23 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     @Override
     public Message verifyUserinfoFun1(Userinfo userinfo) {
         Message message=new Message();
+
+//        LoginUserinfoBean loginUserinfoBean=inputUsernamePassword();
+
         LoginUserinfoBean loginUserinfoBean=new LoginUserinfoBean();
         loginUserinfoBean.setUsername(userinfo.getUsername());
         loginUserinfoBean.setPassword(userinfo.getPassword());
+
+//        Map loginUserinfoMap=new HashMap();
+//        loginUserinfoMap.put("username",loginUserinfoBean.getUsername());
+//        loginUserinfoMap.put("password",loginUserinfoBean.getPassword());
+
         QueryWrapper<Userinfo> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("username",loginUserinfoBean.getUsername())
-                .eq("password",loginUserinfoBean.getPassword());
+        .eq("password",loginUserinfoBean.getPassword());
+
+
+
         //username=#{username}   map.key=#{map.value}
         List<Userinfo> list=userinfoMapper.selectList(queryWrapper);
 
@@ -473,7 +530,12 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             message.setStatusCode(500);
             message.setMsg("system error");
         }
+
+//        System.out.println(message);
         return message;
+
+
+
     }
 
 
@@ -509,7 +571,12 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             message.setStatusCode(500);
             message.setMsg("system error");
         }
+
+//        System.out.println(message);
         return message;
+
+
+
     }
     @Override
     public Message verifyUserinfoFun22(Userinfo userinfo) {
@@ -558,6 +625,7 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             flag=1;
             message.setStatusCode(500);
             message.setMsg(e.getMessage());
+
         }
         if(flag==1){
             return message;
@@ -571,6 +639,10 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             message.setMsg("ok");
             message.setObj(userinfoResult);
         }
+
+
         return message;
     }
+
+
 }

@@ -15,8 +15,8 @@ import java.util.List;
  *  服务实现类
  * </p>
  *
- * @author junghoon
- * @since 2023-09-21
+ * @author yhc
+ * @since 2023-09-18
  */
 @Service
 public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements IDeptService {

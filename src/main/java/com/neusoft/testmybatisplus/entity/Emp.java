@@ -11,8 +11,8 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author junghoon
- * @since 2023-09-21
+ * @author yhc
+ * @since 2023-09-18
  */
 public class Emp implements Serializable {
 
@@ -122,14 +122,14 @@ public class Emp implements Serializable {
     @Override
     public String toString() {
         return "Emp{" +
-                "empno=" + empno +
-                ", ename=" + ename +
-                ", job=" + job +
-                ", mgr=" + mgr +
-                ", hiredate=" + hiredate +
-                ", sal=" + sal +
-                ", comm=" + comm +
-                ", deptno=" + deptno +
-                "}";
+        "empno=" + empno +
+        ", ename=" + ename +
+        ", job=" + job +
+        ", mgr=" + mgr +
+        ", hiredate=" + hiredate +
+        ", sal=" + sal +
+        ", comm=" + comm +
+        ", deptno=" + deptno +
+        "}";
     }
 }

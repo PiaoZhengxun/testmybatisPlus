@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
  *  前端控制器
  * </p>
  *
- * @author junghoon
- * @since 2023-09-21
+ * @author yhc
+ * @since 2023-09-18
  */
 @RestController
 @RequestMapping("/testmybatisplus/dept")

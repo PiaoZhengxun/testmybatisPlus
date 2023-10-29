@@ -1,14 +1,13 @@
 package com.neusoft.testmybatisplus.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.neusoft.testmybatisplus.dto.*;
 import com.neusoft.testmybatisplus.entity.Emp;
 import com.neusoft.testmybatisplus.service.IEmpService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.crypto.interfaces.PBEKey;
 import java.util.List;
 
 /**
@@ -16,12 +15,14 @@ import java.util.List;
  *  前端控制器
  * </p>
  *
- * @author junghoon
- * @since 2023-09-21
+ * @author yhc
+ * @since 2023-09-18
  */
+//@CrossOrigin
 @RestController
 @RequestMapping("/testmybatisplus/emp")
 public class EmpController {
+
 
     @Autowired
     IEmpService iEmpService;
@@ -200,8 +201,8 @@ public class EmpController {
     public Message getEmpsByQueryCondition6(@RequestBody QueryCondition6 queryCondition6){
         System.out.println("queryCondition6:"+queryCondition6);
 
-        Message message= iEmpService.getEmpsByQueryCondition6(queryCondition6);
-        return message;
+       Message message= iEmpService.getEmpsByQueryCondition6(queryCondition6);
+       return message;
     }
 
     @PostMapping("getEmpsByQueryCondition62")
@@ -242,6 +243,7 @@ public class EmpController {
         Message message= iEmpService.getEmpGroupbySum(queryCondition8.getSumval());
         return message;
     }
+
 
 }
 

@@ -10,8 +10,8 @@ import java.util.List;
  * 
  * </p>
  *
- * @author junghoon
- * @since 2023-09-21
+ * @author yhc
+ * @since 2023-09-18
  */
 public class Dept implements Serializable {
 
@@ -75,5 +75,4 @@ public class Dept implements Serializable {
                 ", emps=" + emps +
                 '}';
     }
-
 }

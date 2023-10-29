@@ -11,6 +11,8 @@ import java.util.Scanner;
 
 public class MyCommonUtil {
 
+
+
     public static void printMessage(Message message){
         if(message.getStatusCode()!=200){
             System.err.println(message.getStatusCode());
@@ -70,7 +72,7 @@ public class MyCommonUtil {
 
 
     // input username password
-    public static LoginUserinfoBean inputUsernamePassword(){
+    public static  LoginUserinfoBean inputUsernamePassword(){
         LoginUserinfoBean loginUserinfoBean=new LoginUserinfoBean();
         Scanner scanner=new Scanner(System.in);
         String username=null;
