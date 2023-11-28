@@ -28,7 +28,7 @@ public class UploadController {
         MultipartFile myFile= file;
         Message message=null;
 
-        String path = "d:/picserver";
+        String path = "/Users/junghoonpark/Desktop/학교/2023년/인턴/picserver";
 
 
         String fileName = myFile.getOriginalFilename();
@@ -56,7 +56,7 @@ public class UploadController {
             throws Exception {
 
         // 获取文件
-        File file = new File("d:/picserver/acaccedf-1780-4bed-9c31-28745c80b678.jpg");
+        File file = new File("/Users/junghoonpark/Desktop/학교/2023년/인턴/picserver");
         //文件名
         String fileName = file.getName();
 

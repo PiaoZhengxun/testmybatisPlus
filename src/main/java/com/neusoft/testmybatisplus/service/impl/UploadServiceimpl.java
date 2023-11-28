@@ -12,7 +12,6 @@ public class UploadServiceimpl  implements UploadService {
     @Override
     public Message savePicUrl(String picname) {
        Message message=new Message();
-        // save pic by Dao
         String picserver="http://127.0.0.1:8082/img/";
 
         String picurl=picserver+picname;
